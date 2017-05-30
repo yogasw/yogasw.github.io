@@ -204,7 +204,7 @@
             $('div#form-loader').removeClass('is-hidden').fadeIn(500);
             $.ajax({
                 type: 'POST',
-                url: 'php/mail_handler.php', // Form script
+                url: 'http://arioki.dev/belajar/mail_handler.php', // Form script
                 data: post_data
             })
                 .done(function () {

@@ -1,5 +1,5 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
 /* Configuration */
 /*your web-mail*/
 $mailto  = 'your webmail here';
