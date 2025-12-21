@@ -1,0 +1,218 @@
+{{ define "head" }}
+<!-- SEO Meta Tags -->
+<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}">
+<meta name="keywords" content="{{ if .Params.tags }}{{ delimit .Params.tags ", " }}{{ end }}">
+<meta name="author" content="{{ if .Params.contributors }}{{ index .Params.contributors 0 }}{{ else }}{{ .Site.Title }}{{ end }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}">
+{{ if .Params.image }}
+<meta property="og:image" content="{{ .Params.image | absURL }}">
+{{ end }}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="{{ .Permalink }}">
+<meta property="twitter:title" content="{{ .Title }}">
+<meta property="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}">
+{{ if .Params.image }}
+<meta property="twitter:image" content="{{ .Params.image | absURL }}">
+{{ end }}
+
+<!-- Article Meta -->
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+{{ if .Lastmod }}
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+{{ end }}
+{{ if .Params.categories }}
+{{ range .Params.categories }}
+<meta property="article:section" content="{{ . }}">
+{{ end }}
+{{ end }}
+{{ if .Params.tags }}
+{{ range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+{{ end }}
+{{ end }}
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ .Title }}",
+  "description": "{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  {{ if .Lastmod }}"dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",{{ end }}
+  "author": {
+    "@type": "Person",
+    "name": "{{ if .Params.contributors }}{{ index .Params.contributors 0 }}{{ else }}{{ .Site.Title }}{{ end }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ .Site.Title }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  }{{ if .Params.image }},
+  "image": "{{ .Params.image | absURL }}"{{ end }}
+}
+</script>
+{{ end }}
+
+{{ define "main" }}
+<article class="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Back to Blog Link -->
+    <div class="mb-8">
+      <a href="/blog" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back to Blog
+      </a>
+    </div>
+
+    <!-- Article Header -->
+    <header class="mb-8">
+      <!-- Categories -->
+      {{ if .Params.categories }}
+      <div class="flex flex-wrap gap-2 mb-4">
+        {{ range .Params.categories }}
+        <span class="px-3 py-1 text-sm font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full">
+          {{ . }}
+        </span>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      <!-- Title -->
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
+        {{ .Title }}
+      </h1>
+
+      <!-- Meta Information -->
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+        <!-- Author -->
+        {{ if .Params.contributors }}
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <span>{{ index .Params.contributors 0 }}</span>
+        </div>
+        {{ end }}
+
+        <!-- Date -->
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          {{ .Date.Format "January 2, 2006" }}
+        </time>
+
+        <!-- Reading Time -->
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span>{{ .ReadingTime }} min read</span>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      {{ if .Params.tags }}
+      <div class="flex flex-wrap gap-2 mt-4">
+        {{ range .Params.tags }}
+        <span class="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+          #{{ . }}
+        </span>
+        {{ end }}
+      </div>
+      {{ end }}
+    </header>
+
+    <!-- Article Content -->
+    <div class="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8">
+      <div class="prose prose-lg dark:prose-invert max-w-none
+        prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
+        prose-p:text-gray-700 dark:prose-p:text-gray-300
+        prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-gray-900 dark:prose-strong:text-white
+        prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+        prose-pre:bg-gray-900 dark:prose-pre:bg-black prose-pre:text-gray-100
+        prose-blockquote:border-blue-500 dark:prose-blockquote:border-blue-400 prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-blue-900/10 prose-blockquote:py-1 prose-blockquote:px-4
+        prose-img:rounded-lg prose-img:shadow-md
+        prose-hr:border-gray-300 dark:prose-hr:border-gray-700
+        prose-li:text-gray-700 dark:prose-li:text-gray-300">
+        {{ .Content }}
+      </div>
+    </div>
+
+    <!-- Share Section -->
+    <div class="mt-8 p-6 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Share this post</h3>
+      <div class="flex gap-3">
+        <!-- Twitter -->
+        <a href="https://twitter.com/intent/tweet?text={{ .Title }}&url={{ .Permalink }}" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-colors"
+           aria-label="Share on Twitter">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+          </svg>
+        </a>
+        
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+           aria-label="Share on Facebook">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+        
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-700 hover:bg-blue-800 text-white transition-colors"
+           aria-label="Share on LinkedIn">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation to Next/Previous Posts -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+      {{ with .PrevInSection }}
+      <a href="{{ .RelPermalink }}" class="p-4 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-md transition-shadow">
+        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">← Previous</div>
+        <div class="font-medium text-gray-900 dark:text-white">{{ .Title }}</div>
+      </a>
+      {{ end }}
+      
+      {{ with .NextInSection }}
+      <a href="{{ .RelPermalink }}" class="p-4 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-md transition-shadow {{ if not $.PrevInSection }}md:col-start-2{{ end }}">
+        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1 text-right">Next →</div>
+        <div class="font-medium text-gray-900 dark:text-white text-right">{{ .Title }}</div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</article>
+{{ end }}

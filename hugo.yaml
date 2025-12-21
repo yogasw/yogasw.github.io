@@ -1,0 +1,34 @@
+baseURL: 'https://yogasw.my.id/'
+languageCode: 'en-us'
+title: 'Yoga Setiawan'
+
+module:
+  hugoVersion:
+    extended: true
+    min: "0.151.0"
+  imports:
+    - path: github.com/thuliteio/doks-core
+    - path: github.com/thuliteio/seo
+
+params:
+  doks:
+    # Doks theme parameters
+    sectionNav: ["docs", "blog"]
+
+# Sitemap configuration
+sitemap:
+  changefreq: monthly
+  filename: sitemap.xml
+  priority: 0.5
+    
+menus:
+  main:
+    - name: Home
+      url: /
+      weight: 10
+    - name: 🛠️ Dev Utilities
+      url: /tools
+      weight: 20
+    - name: Blog
+      url: /blog
+      weight: 30
