@@ -40,14 +40,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build tools
-        working-directory: ./utilities
+      - name: Build tools and Hugo site
         run: |
-          npm install
           npm run build:tools
-
-      - name: Build Hugo site
-        run: hugo --minify
+          hugo --minify
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
