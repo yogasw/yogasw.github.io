@@ -15,19 +15,11 @@ params:
     # Doks theme parameters
     sectionNav: ["docs", "blog"]
 
-# Media types configuration
+# Media types configuration - Override XML to use text/xml instead of application/xml
 mediaTypes:
-  "text/xml":
+  text/xml:
     suffixes:
       - xml
-
-# Output formats configuration
-outputFormats:
-  sitemap:
-    mediaType: "text/xml"
-    baseName: "sitemap"
-    isPlainText: false
-    notAlternative: true
 
 # Sitemap configuration
 sitemap:
