@@ -1,0 +1,7 @@
+# Headers for sitemap.xml
+/sitemap.xml
+  Content-Type: text/xml
+
+# Headers for utilities sitemap
+/utilities/sitemap.xml
+  Content-Type: text/xml
