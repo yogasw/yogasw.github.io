@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const TOOLS_SRC = path.join(__dirname, '../tools');
+const TOOLS_SRC = path.join(__dirname, '../utilities');
 const TOOLS_DIST = path.join(TOOLS_SRC, 'dist');
 const STATIC_DIR = path.join(__dirname, '../static');
-const STATIC_TOOLS_DIR = path.join(STATIC_DIR, 'tools');
+const STATIC_TOOLS_DIR = path.join(STATIC_DIR, 'utilities');
 const HUGO_PUBLIC_DIR = path.join(__dirname, '../public'); // Temp output for header
 
 // Ensure directories exist

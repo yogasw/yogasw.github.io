@@ -15,4 +15,4 @@ This is my migration to Hugo. I have integrated my Svelte tools into this static
 Fast, flexible, and fun.
 
 ## The Tools
-Check out the [Tools](/tools) section to see my Svelte applications running embedded in this site.
+Check out the [Utilities](/utilities) section to see my Svelte applications running embedded in this site.

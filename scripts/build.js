@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const TOOLS_SRC = path.join(__dirname, '../tools');
+const TOOLS_SRC = path.join(__dirname, '../utilities');
 const TOOLS_DIST = path.join(TOOLS_SRC, 'dist');
 const STATIC_DIR = path.join(__dirname, '../static');
-const STATIC_TOOLS_DIR = path.join(STATIC_DIR, 'tools');
+const STATIC_TOOLS_DIR = path.join(STATIC_DIR, 'utilities');
 const PARTIALS_DIR = path.join(__dirname, '../layouts/partials');
 
 // Ensure directories exist
@@ -19,7 +19,7 @@ try {
     execSync('npm install', { cwd: TOOLS_SRC, stdio: 'inherit' });
     execSync('npm run build', { cwd: TOOLS_SRC, stdio: 'inherit' });
 
-    // Move _app to static/tools/_app
+    // Move _app to static/utilities/_app
     const appSrc = path.join(TOOLS_DIST, '_app');
     const appDest = path.join(STATIC_TOOLS_DIR, '_app');
     
@@ -31,7 +31,7 @@ try {
     // Copy new assets
     if (fs.existsSync(appSrc)) {
          fs.renameSync(appSrc, appDest); // Move instead of copy to save space/time
-         console.log('Moved _app to static/tools/_app');
+         console.log('Moved _app to static/utilities/_app');
     } else {
         console.error('Error: _app directory not found in dist. Build might have failed or config is wrong.');
         process.exit(1);

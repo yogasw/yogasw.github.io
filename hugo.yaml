@@ -27,7 +27,7 @@ menus:
       url: /
       weight: 10
     - name: 🛠️ Dev Utilities
-      url: /tools
+      url: /utilities
       weight: 20
     - name: Blog
       url: /blog
