@@ -44,7 +44,7 @@ jobs:
         working-directory: ./utilities
         run: |
           npm install
-          npm run build
+          npm run build:tools
 
       - name: Build Hugo site
         run: hugo --minify
