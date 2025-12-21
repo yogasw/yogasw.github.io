@@ -15,6 +15,20 @@ params:
     # Doks theme parameters
     sectionNav: ["docs", "blog"]
 
+# Media types configuration
+mediaTypes:
+  "text/xml":
+    suffixes:
+      - xml
+
+# Output formats configuration
+outputFormats:
+  sitemap:
+    mediaType: "text/xml"
+    baseName: "sitemap"
+    isPlainText: false
+    notAlternative: true
+
 # Sitemap configuration
 sitemap:
   changefreq: monthly
