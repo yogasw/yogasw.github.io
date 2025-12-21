@@ -1,0 +1,8 @@
+github.com/gethyas/doks-core v1.8.3 h1:9YTNeqR5Aq0mKTZmhe8ILLTTnU8yqXt2t6F2yPp4HS8=
+github.com/gethyas/doks-core v1.8.3/go.mod h1:pCsnjESuRZXpgVyz1/7HN88diB+L5BGBqwDxA8WSK6A=
+github.com/gethyas/seo v2.4.2+incompatible h1:j3IaBh4znaLaBvidARrYO2vHAKmqQFqYysRDM9c685E=
+github.com/gethyas/seo v2.4.2+incompatible/go.mod h1:nXXPxlmzLVSfbFvX9cQnhfvvKIraCje47slXwaTFSTw=
+github.com/thuliteio/doks-core v1.8.3 h1:+Wdc/o2UE9mCJNn822nFJ4Xb4rQEcSBXQI1Hut/IRwI=
+github.com/thuliteio/doks-core v1.8.3/go.mod h1:UaTChtPLIY5/V3mLJra5GUuyDKs+mGaRqD1/adZ+DZY=
+github.com/thuliteio/seo v2.4.2+incompatible h1:ht4InVz9FNkaQlZFQ5YI6DBvvAA1VxhxFdVX3EEWHVo=
+github.com/thuliteio/seo v2.4.2+incompatible/go.mod h1:45vVnXlj8gclHRi0MjUiLCQPeLnlAIGfgKciaIRoODI=

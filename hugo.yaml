@@ -1,19 +1,26 @@
 baseURL: 'https://yogasw.my.id/'
 languageCode: 'en-us'
 title: 'Yoga Setiawan'
-theme: []
 
 module:
   hugoVersion:
-    extended: false
+    extended: true
     min: "0.151.0"
+  imports:
+    - path: github.com/thuliteio/doks-core
+    - path: github.com/thuliteio/seo
 
+params:
+  doks:
+    # Doks theme parameters
+    sectionNav: ["docs", "blog"]
+    
 menus:
   main:
     - name: Home
       url: /
       weight: 10
-    - name: Tools
+    - name: 🛠️ Dev Utilities
       url: /tools
       weight: 20
     - name: Blog

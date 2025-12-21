@@ -2,6 +2,9 @@
 title: "Welcome to My New Blog"
 date: 2025-12-21T10:00:00+07:00
 summary: "This is the first post on my new Hugo blog."
+contributors: ["Yoga Setiawan"]
+categories: ["General"]
+tags: ["hugo", "blog"]
 ---
 
 # Hello World
