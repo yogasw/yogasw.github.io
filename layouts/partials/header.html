@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top shadow-sm">
+  <div class="{{ if eq .Section "tools" }}container-fluid{{ else }}container{{ end }}">
+    <a class="navbar-brand font-weight-bold" href="/">Yoga Setiawan</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ml-auto">
+        {{ $currentPage := . }}
+        {{ range .Site.Menus.main }}
+        <li class="nav-item {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}active{{ end }}">
+          <a class="nav-link" href="{{ .URL }}">{{ .Name }}</a>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+</nav>
+<div style="height: 80px;"></div> <!-- Spacer for fixed navbar -->

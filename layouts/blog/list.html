@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="row pt-5">
+    <div class="col-md-8 mx-auto">
+        <h1 class="mb-4">Blog</h1>
+        {{ range .Pages }}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title h4"><a href="{{ .RelPermalink }}" class="text-dark">{{ .Title }}</a></h2>
+                <div class="text-muted mb-2 small">{{ .Date.Format "January 2, 2006" }}</div>
+                <p class="card-text">{{ .Summary }}</p>
+                <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm">Read more</a>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

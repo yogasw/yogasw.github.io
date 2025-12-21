@@ -1,0 +1,21 @@
+baseURL: 'https://yogasw.my.id/'
+languageCode: 'en-us'
+title: 'Yoga Setiawan'
+theme: []
+
+module:
+  hugoVersion:
+    extended: false
+    min: "0.151.0"
+
+menus:
+  main:
+    - name: Home
+      url: /
+      weight: 10
+    - name: Tools
+      url: /tools
+      weight: 20
+    - name: Blog
+      url: /blog
+      weight: 30

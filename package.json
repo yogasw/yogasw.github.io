@@ -1,0 +1,11 @@
+{
+  "name": "yogasw-site",
+  "version": "1.0.0",
+  "scripts": {
+    "build:tools": "node scripts/build_tools.js",
+    "predev": "npm run build:tools",
+    "dev": "hugo server"
+  },
+  "devDependencies": {
+  }
+}

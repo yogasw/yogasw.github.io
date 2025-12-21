@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{ if .IsHome }}Android Native and React Native Programmer{{ else }}{{ .Description }}{{ end }}">
+    <meta name="author" content="Yoga-Setiawan">
+    <title>{{ if .IsHome }}Yoga Setiawan{{ else }}{{ .Title }} | Yoga Setiawan{{ end }}</title>
+
+    <!-- Bootstrap core CSS -->
+    {{ $bootstrap := resources.Get "css/bootstrap.min.css" }}
+    <link href="{{ $bootstrap.RelPermalink }}" rel="stylesheet">
+    <!-- Custom styles -->
+    {{ $customStyle := resources.Get "css/style-custom.css" }}
+    <link href="{{ $customStyle.RelPermalink }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    {{ block "head" . }}{{ end }}
+  </head>
+  <body>
+    {{ partial "header.html" . }}
+    
+    <main role="main" class="{{ if eq .Section "tools" }}container-fluid{{ else }}container{{ end }}">
+      {{ block "main" . }}{{ end }}
+    </main>
+
+    <footer class="text-center mt-5 mb-3">
+       <p class="footer-text">© {{ now.Year }} <a href="/privacy-policy" style="color: blue; text-decoration: underline;">Privacy Policy</a></p>
+    </footer>
+  </body>
+</html>
