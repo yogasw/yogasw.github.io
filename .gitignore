@@ -1,7 +1,8 @@
-public/
+public/*
 resources/*
 .hugo_build.lock
 .DS_Store
 node_modules/*
 static/utilities/*
 static/utilities/*
+public/blog
