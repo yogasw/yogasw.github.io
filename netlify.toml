@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build:tools && hugo --minify"
+  command = "hugo mod get && npm run build:tools && hugo --minify"
   publish = "public"
 
 [build.environment]
@@ -8,13 +8,13 @@
   NODE_VERSION = "20"
 
 [context.production]
-  command = "npm run build:tools && hugo --minify"
+  command = "hugo mod get && npm run build:tools && hugo --minify"
   publish = "public"
 
 [context.deploy-preview]
-  command = "npm run build:tools && hugo --minify --buildFuture"
+  command = "hugo mod get && npm run build:tools && hugo --minify --buildFuture"
   publish = "public"
 
 [context.branch-deploy]
-  command = "npm run build:tools && hugo --minify"
+  command = "hugo mod get && npm run build:tools && hugo --minify"
   publish = "public"
