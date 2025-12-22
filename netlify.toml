@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build:tools && hugo --minify"
+  publish = "public"
+
+[build.environment]
+  HUGO_VERSION = "0.139.4"
+  HUGO_EXTENDED = "true"
+  NODE_VERSION = "20"
+
+[context.production]
+  command = "npm run build:tools && hugo --minify"
+  publish = "public"
+
+[context.deploy-preview]
+  command = "npm run build:tools && hugo --minify --buildFuture"
+  publish = "public"
+
+[context.branch-deploy]
+  command = "npm run build:tools && hugo --minify"
+  publish = "public"
