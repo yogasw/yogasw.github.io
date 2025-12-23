@@ -53,6 +53,8 @@ exports.handler = async (event, context) => {
       headers: {
         'Content-Type': 'text/xml; charset=utf-8',
         'Content-Encoding': 'gzip',
+        'Content-Length': compressed.length.toString(),
+        'Connection': 'keep-alive',
         'Cache-Control': 'public, max-age=3600',
       },
       body: compressed.toString('base64'),
