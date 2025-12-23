@@ -28,77 +28,13 @@ exports.handler = async (event, context) => {
     
     const sitemapContent = await response.text();
     
-    // Parse the original sitemap
+    // Parse and rebuild XML for proper formatting
     const parser = new XMLParser({
       ignoreAttributes: false,
       attributeNamePrefix: '@_'
     });
     const parsedXml = parser.parse(sitemapContent);
     
-    // Extract URLs from the original sitemap
-    const urlset = parsedXml.urlset;
-    const urls = Array.isArray(urlset.url) ? urlset.url : [urlset.url];
-    
-    // Group URLs by category
-    const categories = {
-      main: [],
-      blog: [],
-      utilities: []
-    };
-    
-    urls.forEach(url => {
-      const loc = url.loc;
-      if (loc.includes('/blog/')) {
-        categories.blog.push(url);
-      } else if (loc.includes('/utilities/')) {
-        categories.utilities.push(url);
-      } else {
-        categories.main.push(url);
-      }
-    });
-    
-    // Get the latest lastmod from each category
-    const getLatestMod = (urlList) => {
-      if (!urlList.length) return new Date().toISOString().split('T')[0];
-      const dates = urlList.map(u => u.lastmod).filter(Boolean);
-      return dates.length ? dates.sort().reverse()[0] : new Date().toISOString().split('T')[0];
-    };
-    
-    // Build sitemap index structure
-    const sitemapIndex = {
-      '?xml': {
-        '@_version': '1.0',
-        '@_encoding': 'UTF-8'
-      },
-      sitemapindex: {
-        '@_xmlns': 'http://www.sitemaps.org/schemas/sitemap/0.9',
-        sitemap: []
-      }
-    };
-    
-    // Add sitemaps for each category that has URLs
-    if (categories.main.length > 0) {
-      sitemapIndex.sitemapindex.sitemap.push({
-        loc: `${baseUrl}/sitemap-main.xml`,
-        lastmod: getLatestMod(categories.main)
-      });
-    }
-    
-    if (categories.blog.length > 0) {
-      sitemapIndex.sitemapindex.sitemap.push({
-        loc: `${baseUrl}/sitemap-blog.xml`,
-        lastmod: getLatestMod(categories.blog)
-      });
-    }
-    
-    if (categories.utilities.length > 0) {
-      sitemapIndex.sitemapindex.sitemap.push({
-        loc: `${baseUrl}/sitemap-utilities.xml`,
-        lastmod: getLatestMod(categories.utilities)
-      });
-    }
-    
-    // Build the XML
     const builder = new XMLBuilder({
       ignoreAttributes: false,
       attributeNamePrefix: '@_',
@@ -107,38 +43,20 @@ exports.handler = async (event, context) => {
       suppressEmptyNode: true
     });
     
-    const xmlOutput = builder.build(sitemapIndex);
+    const xmlOutput = builder.build(parsedXml);
     
-    // Check if client accepts gzip encoding
-    const acceptEncoding = event.headers['accept-encoding'] || '';
-    const supportsGzip = acceptEncoding.includes('gzip');
-    
-    const headers = {
-      'Content-Type': 'text/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600',
-    };
-    
-    let body = xmlOutput;
-    
-    // Compress with gzip if supported
-    if (supportsGzip) {
-      const compressed = await gzip(xmlOutput);
-      headers['Content-Encoding'] = 'gzip';
-      body = compressed.toString('base64');
-      headers['isBase64Encoded'] = true;
-      
-      return {
-        statusCode: 200,
-        headers,
-        body,
-        isBase64Encoded: true
-      };
-    }
+    // Always compress with gzip
+    const compressed = await gzip(xmlOutput);
     
     return {
       statusCode: 200,
-      headers,
-      body
+      headers: {
+        'Content-Type': 'text/xml; charset=utf-8',
+        'Content-Encoding': 'gzip',
+        'Cache-Control': 'public, max-age=3600',
+      },
+      body: compressed.toString('base64'),
+      isBase64Encoded: true
     };
     
   } catch (error) {
