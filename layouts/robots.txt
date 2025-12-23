@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: {{ .Site.BaseURL }}blog_utilities_sitemap.xml
+Sitemap: {{ .Site.BaseURL }}new-sitemap.xml
