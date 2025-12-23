@@ -55,7 +55,7 @@ exports.handler = async (event, context) => {
         'Content-Encoding': 'gzip',
         'Content-Length': compressed.length.toString(),
         'Connection': 'keep-alive',
-        'Cache-Control': 'public, max-age=3600',
+        'Cache-Control': 'public, max-age=1800',
       },
       body: compressed.toString('base64'),
       isBase64Encoded: true
