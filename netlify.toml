@@ -1,6 +1,7 @@
 [build]
   command = "hugo mod get && npm run build:tools && hugo --minify"
   publish = "public"
+  functions = "netlify/functions"
 
 [build.environment]
   HUGO_VERSION = "0.151.0"
@@ -18,3 +19,9 @@
 [context.branch-deploy]
   command = "hugo mod get && npm run build:tools && hugo --minify"
   publish = "public"
+
+# Netlify Functions
+[[redirects]]
+  from = "/api/sitemap.xml"
+  to = "/.netlify/functions/sitemap-proxy"
+  status = 200

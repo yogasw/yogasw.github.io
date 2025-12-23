@@ -6,3 +6,5 @@ node_modules/*
 static/utilities/*
 static/utilities/*
 public/blog
+# Local Netlify folder
+.netlify
