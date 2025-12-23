@@ -76,6 +76,18 @@
 
         <!-- Right side: Actions -->
         <div class="flex items-center gap-2">
+          <!-- Search Button -->
+          <button
+            id="search-button"
+            class="hidden sm:flex items-center gap-2 px-3 py-1.5 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+            aria-label="Search"
+          >
+            <span>Search</span>
+            <kbd class="px-1.5 py-0.5 text-xs font-semibold bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded">
+              <span id="search-key-hint"></span> K
+            </kbd>
+          </button>
+
           <!-- GitHub Link -->
           <a
             href="https://github.com/yogasw"
@@ -109,5 +121,69 @@
       </div>
     </div>
   </header>
+
+  <!-- Search Integration Script -->
+  <script>
+    (function() {
+      // Detect OS for keyboard shortcut hint
+      const isMac = navigator.userAgent.indexOf('Mac') !== -1;
+      const searchKeyHint = document.getElementById('search-key-hint');
+      if (searchKeyHint) {
+        searchKeyHint.textContent = isMac ? '⌘' : 'CTRL';
+      }
+
+      // Handle search button click
+      const searchButton = document.getElementById('search-button');
+      if (searchButton) {
+        searchButton.addEventListener('click', function() {
+          // Post message to utilities iframe or redirect to utilities with search open
+          if (window.location.pathname.startsWith('/utilities')) {
+            // If already on utilities, trigger search modal via custom event
+            window.dispatchEvent(new CustomEvent('openSearch'));
+          } else {
+            // Redirect to utilities and open search
+            window.location.href = '/utilities?search=open';
+          }
+        });
+      }
+
+      // Handle Cmd/Ctrl+K keyboard shortcut
+      document.addEventListener('keydown', function(e) {
+        const correctModifier = isMac ? e.metaKey : e.ctrlKey;
+        if (correctModifier && e.key === 'k') {
+          e.preventDefault();
+          if (window.location.pathname.startsWith('/utilities')) {
+            window.dispatchEvent(new CustomEvent('openSearch'));
+          } else {
+            window.location.href = '/utilities?search=open';
+          }
+        }
+      });
+
+      // Theme toggle functionality (existing)
+      const themeToggle = document.getElementById('theme-toggle');
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+      function updateIcons() {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (darkIcon && lightIcon) {
+          darkIcon.classList.toggle('hidden', !isDark);
+          lightIcon.classList.toggle('hidden', isDark);
+        }
+      }
+
+      updateIcons();
+
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          const isDark = document.documentElement.classList.contains('dark');
+          document.documentElement.classList.toggle('dark', !isDark);
+          localStorage.setItem('theme', isDark ? 'light' : 'dark');
+          updateIcons();
+        });
+      }
+    })();
+  </script>
 
   <!-- Main Content -->
