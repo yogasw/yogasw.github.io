@@ -47,11 +47,10 @@ exports.handler = async (event, context) => {
     
     // Always compress with gzip
     const compressed = await gzip(xmlOutput);
-    
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/xml; charset=utf-8',
+        'Content-Type': 'application/xml',
         'Content-Encoding': 'gzip',
         'Content-Length': compressed.length.toString(),
         'Connection': 'keep-alive',
