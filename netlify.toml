@@ -22,6 +22,6 @@
 
 # Netlify Functions
 [[redirects]]
-  from = "/api/sitemap.xml"
+  from = "/blog_utilities_sitemap.xml"
   to = "/.netlify/functions/sitemap-proxy"
   status = 200

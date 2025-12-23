@@ -1,3 +1,5 @@
+const { XMLParser, XMLBuilder } = require('fast-xml-parser');
+
 exports.handler = async (event, context) => {
   try {
     // Fetch sitemap.xml from the same domain
@@ -18,35 +20,37 @@ exports.handler = async (event, context) => {
       };
     }
     
-    let sitemapContent = await response.text();
+    const sitemapContent = await response.text();
     
-    // Ensure XML is properly formatted (not minified to single line)
-    // Remove all existing whitespace between tags first
-    sitemapContent = sitemapContent.replace(/>\s+</g, '><');
+    // Configure XML parser
+    const parserOptions = {
+      ignoreAttributes: false,
+      attributeNamePrefix: '@_',
+      format: true,
+      indentBy: '  ',
+      suppressEmptyNode: true
+    };
     
-    // Add proper formatting with line breaks and indentation
-    sitemapContent = sitemapContent
-      // XML declaration on its own line
-      .replace(/(<\?xml[^>]+\?>)/, '$1\n')
-      // urlset opening tag
-      .replace(/(<urlset[^>]*>)/, '$1\n')
-      // Each url element on new line with 2-space indent
-      .replace(/<url>/g, '  <url>\n')
-      .replace(/<\/url>/g, '  </url>\n')
-      // Inner elements with 4-space indent
-      .replace(/<loc>/g, '    <loc>')
-      .replace(/<\/loc>/g, '</loc>\n')
-      .replace(/<lastmod>/g, '    <lastmod>')
-      .replace(/<\/lastmod>/g, '</lastmod>\n')
-      .replace(/<changefreq>/g, '    <changefreq>')
-      .replace(/<\/changefreq>/g, '</changefreq>\n')
-      .replace(/<priority>/g, '    <priority>')
-      .replace(/<\/priority>/g, '</priority>\n')
-      // Closing urlset tag
-      .replace(/<\/urlset>/, '</urlset>\n')
-      // Clean up any extra blank lines
-      .replace(/\n{3,}/g, '\n')
-      .trim();
+    const parser = new XMLParser(parserOptions);
+    const parsedXml = parser.parse(sitemapContent);
+    
+    // Configure XML builder for pretty output
+    const builderOptions = {
+      ignoreAttributes: false,
+      attributeNamePrefix: '@_',
+      format: true,
+      indentBy: '  ',
+      suppressEmptyNode: true
+    };
+    
+    const builder = new XMLBuilder(builderOptions);
+    const formattedXml = builder.build(parsedXml);
+    
+    // Add XML declaration if not present
+    const xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
+    const finalXml = formattedXml.startsWith('<?xml') 
+      ? formattedXml 
+      : `${xmlDeclaration}\n${formattedXml}`;
     
     return {
       statusCode: 200,
@@ -54,7 +58,7 @@ exports.handler = async (event, context) => {
         'Content-Type': 'text/xml; charset=utf-8',
         'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
       },
-      body: sitemapContent
+      body: finalXml
     };
     
   } catch (error) {
