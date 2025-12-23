@@ -51,7 +51,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'text/xml; charset=utf-8',
+        'Content-Type': 'application/xml; charset=utf-8',
         'Content-Encoding': 'gzip',
         'Content-Length': compressed.length.toString(),
         'Connection': 'keep-alive',
