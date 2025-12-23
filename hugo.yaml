@@ -1,6 +1,8 @@
 baseURL: 'https://yogasw.my.id/'
 languageCode: 'en-us'
 title: 'Yoga Setiawan'
+enableRobotsTXT: true
+
 
 module:
   hugoVersion:
