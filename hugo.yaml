@@ -33,6 +33,15 @@ outputs:
     - HTML
     - RSS
     - JSON
+    - new_sitemap
+
+# Output formats configuration
+outputFormats:
+  new_sitemap:
+    mediaType: text/xml
+    baseName: new_sitemap
+    isPlainText: false
+    notAlternative: true
 
     
 menus:
