@@ -36,42 +36,15 @@
   </url>
   {{ end }}
 
-  <!-- Individual Tools -->
+  <!-- Individual Tools - Auto-generated from utilities -->
+  {{ $utilityTools := slice "base64" "date-time-diff" "dialogflow-tools" "json-parser" "json-to-curl" "wame-link-generator" }}
+  {{ range $utilityTools }}
   <url>
-    <loc>{{ .Site.BaseURL }}utilities/base64</loc>
+    <loc>{{ $.Site.BaseURL }}utilities/{{ . }}</loc>
     <lastmod>{{ now.Format "2006-01-02" }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>{{ .Site.BaseURL }}utilities/date-time-diff</loc>
-    <lastmod>{{ now.Format "2006-01-02" }}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>{{ .Site.BaseURL }}utilities/dialogflow-tools</loc>
-    <lastmod>{{ now.Format "2006-01-02" }}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>{{ .Site.BaseURL }}utilities/json-parser</loc>
-    <lastmod>{{ now.Format "2006-01-02" }}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>{{ .Site.BaseURL }}utilities/json-to-curl</loc>
-    <lastmod>{{ now.Format "2006-01-02" }}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>{{ .Site.BaseURL }}utilities/wame-link-generator</loc>
-    <lastmod>{{ now.Format "2006-01-02" }}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  {{ end }}
 
 </urlset>
