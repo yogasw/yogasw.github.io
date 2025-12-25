@@ -16,6 +16,27 @@ if (!fs.existsSync(STATIC_TOOLS_DIR)) {
 console.log('--- Starting Tools Integration Build ---');
 
 try {
+    // 0. Sync Git Branch (Only in CI/Netlify)
+    if (process.env.NETLIFY || process.env.GITHUB_ACTIONS || process.env.CI === 'true') {
+        console.log('Step 0: Syncing Git Branch (master)...');
+        execSync('git checkout master', { stdio: 'inherit' });
+        execSync('git pull origin master', { stdio: 'inherit' });
+
+        // 0.1. Sync Utilities Submodule
+        console.log('Step 0.1: Syncing Utilities Submodule (main)...');
+        execSync('git submodule update --init --recursive', { stdio: 'inherit' });
+        execSync('git checkout main', { cwd: TOOLS_SRC, stdio: 'inherit' });
+        execSync('git pull origin main', { cwd: TOOLS_SRC, stdio: 'inherit' });
+    } else {
+        console.log('Step 0: Skipping Git Sync (Local/Non-CI Environment detected)');
+    }
+} catch (e) {
+    console.error('Git sync failed:', e);
+    // Proceed or exit? User asked to sync BEFORE build. 
+    process.exit(1);
+}
+
+try {
     // 1. Generate Header HTML using Hugo
     // We build a single page to public/header_export/index.html
     console.log('Step 1: Generating Hugo Header...');
