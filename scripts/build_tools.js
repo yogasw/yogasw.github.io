@@ -63,20 +63,21 @@ try {
         execSync(`rm -rf ${STATIC_TOOLS_DIR}/*`);
         execSync(`cp -R ${TOOLS_DIST}/. ${STATIC_TOOLS_DIR}/`);
         
-        // 5. Post-process for Directory URLs
-        console.log('Step 5: Restructuring for Directory URLs...');
+        // 5. Post-process: Rename .html to extensionless files for clean URLs (no trailing slash)
+        console.log('Step 5: Removing .html extensions for clean URLs...');
         const files = fs.readdirSync(STATIC_TOOLS_DIR);
         files.forEach(file => {
             if (file.endsWith('.html') && file !== 'index.html' && file !== '404.html') {
                 const name = file.replace('.html', '');
-                const dir =  path.join(STATIC_TOOLS_DIR, name);
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
-                fs.renameSync(path.join(STATIC_TOOLS_DIR, file), path.join(dir, 'index.html'));
-                console.log(`Moved ${file} to ${name}/index.html`);
+                // Rename json-to-curl.html -> json-to-curl
+                fs.renameSync(path.join(STATIC_TOOLS_DIR, file), path.join(STATIC_TOOLS_DIR, name));
+                console.log(`Renamed ${file} to ${name}`);
             }
         });
+        /* 
+           Formerly moved to dir/index.html, but that forces redirect /foo -> /foo/
+           We want /foo to be 200 OK directly.
+        */
         
     } finally {
         // Restore original app.html
