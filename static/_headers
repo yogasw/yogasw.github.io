@@ -2,24 +2,3 @@
 /sitemap.xml
   Content-Type: text/xml
 
-# Headers for utilities sitemap
-/utilities/sitemap.xml
-  Content-Type: text/xml
-
-/utilities/base64
-  Content-Type: text/html
-
-/utilities/date-time-diff
-  Content-Type: text/html
-
-/utilities/dialogflow-tools
-  Content-Type: text/html
-
-/utilities/json-parser
-  Content-Type: text/html
-
-/utilities/json-to-curl
-  Content-Type: text/html
-
-/utilities/wame-link-generator
-  Content-Type: text/html
