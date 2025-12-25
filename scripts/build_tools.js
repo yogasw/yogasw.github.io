@@ -85,19 +85,54 @@ try {
         execSync(`cp -R ${TOOLS_DIST}/. ${STATIC_TOOLS_DIR}/`);
         
         // 5. Post-process: Rename .html to extensionless files for clean URLs (no trailing slash)
-        console.log('Step 5: Removing .html extensions for clean URLs...');
+        console.log('Step 5: Removing .html extensions and updating headers...');
+        
+        const headersPath = path.join(STATIC_DIR, '_headers');
+        let headersContent = fs.existsSync(headersPath) ? fs.readFileSync(headersPath, 'utf-8') : '';
+        let headersUpdated = false;
+
         const files = fs.readdirSync(STATIC_TOOLS_DIR);
         files.forEach(file => {
             if (file.endsWith('.html') && file !== 'index.html' && file !== '404.html') {
                 const name = file.replace('.html', '');
                 // Rename json-to-curl.html -> json-to-curl
-                fs.renameSync(path.join(STATIC_TOOLS_DIR, file), path.join(STATIC_TOOLS_DIR, name));
-                console.log(`Renamed ${file} to ${name}`);
+                const oldPath = path.join(STATIC_TOOLS_DIR, file);
+                const newPath = path.join(STATIC_TOOLS_DIR, name);
+                
+                // Check if target exists (idempotency for repeated runs)
+                if (fs.existsSync(newPath)) {
+                   // If new file exists, maybe we already renamed it? or it's a conflict
+                   // We'll update mtime or assume it's fine. 
+                   // But if old file exists, we must move it.
+                   if (fs.existsSync(oldPath)) {
+                       fs.unlinkSync(newPath); // Remove stale new file to overwrite
+                       fs.renameSync(oldPath, newPath);
+                       console.log(`Renamed ${file} to ${name}`);
+                   }
+                } else if (fs.existsSync(oldPath)) {
+                    fs.renameSync(oldPath, newPath);
+                    console.log(`Renamed ${file} to ${name}`);
+                }
+
+                // Append to _headers if missing
+                const rule = `/utilities/${name}`;
+                if (!headersContent.includes(rule)) {
+                    headersContent += `\n${rule}\n  Content-Type: text/html\n`;
+                    headersUpdated = true;
+                    console.log(`Added headers rule for ${name}`);
+                }
             }
         });
+
+        if (headersUpdated) {
+            fs.writeFileSync(headersPath, headersContent);
+            console.log('Updated static/_headers');
+        }
+        
         /* 
            Formerly moved to dir/index.html, but that forces redirect /foo -> /foo/
-           We want /foo to be 200 OK directly.
+           Renaming to extensionless file enables 200 OK on both Local and Prod.
+           Updating _headers ensures Prod serves as text/html (Netlify defaults to plain text for extensionless).
         */
         
     } finally {
