@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: {{ .Site.BaseURL }}new-sitemap.xml
+Sitemap: {{ .Site.BaseURL }}sitemap.xml
