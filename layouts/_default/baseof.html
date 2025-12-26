@@ -1,5 +1,58 @@
-{{ partial "header.html" . }}
-
-{{ block "main" . }}{{ end }}
-
-{{ partial "footer.html" . }}
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ .Title }} - {{ .Site.Title }}</title>
+  
+  <!-- Tailwind CSS -->
+  {{ $tailwind := resources.Get "css/output.css" }}
+  {{ if $tailwind }}
+    <link href="{{ $tailwind.RelPermalink }}" rel="stylesheet">
+  {{ end }}
+  
+  <!-- Dark mode script - must be in head to prevent flash -->
+  <script>
+    // Initialize theme before page renders
+    (function() {
+      const theme = localStorage.getItem('theme') || 
+                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+  
+  <style>
+    /* Base styles for dark mode */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f9fafb;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --border-color: #e5e7eb;
+    }
+    
+    .dark {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #9ca3af;
+      --border-color: #1f2937;
+    }
+    
+    body {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      transition: background-color 0.2s, color 0.2s;
+    }
+  </style>
+  
+  {{ block "head" . }}{{ end }}
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-[#0a0a0a]">
+  {{ partial "header_nav.html" . }}
+  
+  {{ block "main" . }}{{ end }}
+  
+  {{ partial "footer.html" . }}
+</body>
+</html>
