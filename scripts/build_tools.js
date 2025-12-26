@@ -43,44 +43,13 @@ try {
 }
 
 try {
-  // 0.2. Clean public directory before build
-  console.log("Step 0.2: Cleaning public directory...");
+  // 1. Clean public directory before build
+  console.log("Step 1: Cleaning public directory...");
   execSync("rm -rf public", { stdio: "inherit" });
 
-  // 1. Generate Header HTML using Hugo
-  // We build a single page to public/header_export/index.html
-  console.log("Step 1: Generating Hugo Header...");
+  // 2. Generate Header HTML using Hugo
+  console.log("Step 2: Generating Hugo...");
   execSync("hugo --quiet", { stdio: "inherit" });
-
-  const headerPath = path.join(HUGO_PUBLIC_DIR, "header_export/index.html");
-  if (!fs.existsSync(headerPath)) {
-    throw new Error("Header export failed. File not found: " + headerPath);
-  }
-
-  let headerHtml = fs.readFileSync(headerPath, "utf-8");
-  // Clean up local dev connection scripts if any (optional, usually handled by prod build)
-
-  // 2. Inject Header into SvelteKit App Shell
-  console.log("Step 2: Injecting Header into SvelteKit...");
-  const appHtmlPath = path.join(TOOLS_SRC, "src/app.html");
-  const originalAppHtml = fs.readFileSync(appHtmlPath, "utf-8");
-
-  // Replace placeholder or body content?
-  // We'll insert it at the beginning of the body if placeholder doesn't exist.
-  let newAppHtml = originalAppHtml;
-  if (newAppHtml.includes("<!-- HUGO_HEADER -->")) {
-    newAppHtml = newAppHtml.replace("<!-- HUGO_HEADER -->", headerHtml);
-  } else {
-    // Fallback: Prepend to %sveltekit.body% or inside body
-    // newAppHtml = newAppHtml.replace('<div style="display: contents">%sveltekit.body%</div>',
-    //     `<div id="hugo-header-container">${headerHtml}</div><div style="display: contents">%sveltekit.body%</div>`);
-  }
-
-  // Write temporary app.html
-  const tempAppHtmlPath = path.join(TOOLS_SRC, "src/app.html.temp");
-  // Backup original
-  fs.renameSync(appHtmlPath, path.join(TOOLS_SRC, "src/app.html.bak"));
-  fs.writeFileSync(appHtmlPath, newAppHtml);
 
   try {
     // 3. Build SvelteKit
@@ -157,8 +126,6 @@ try {
            Updating _headers ensures Prod serves as text/html (Netlify defaults to plain text for extensionless).
         */
   } finally {
-    // Restore original app.html
-    fs.renameSync(path.join(TOOLS_SRC, "src/app.html.bak"), appHtmlPath);
   }
 
   console.log("--- Tools Integration Complete ---");
