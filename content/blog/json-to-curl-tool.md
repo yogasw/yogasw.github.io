@@ -532,10 +532,8 @@ Body Field Name:    request.data
 
 Jika Anda suka tool ini, check out tools lainnya:
 
-- **[JSON Parser](/blog/json-parser-tool/)** - Parse & visualize JSON dengan syntax highlighting
+- **[JSON Parser](/utilities/json-parser)** - Parse & visualize JSON dengan syntax highlighting
 - **[Base64 Encoder/Decoder](/utilities/base64)** - Encode/decode Base64 strings
-- **[JWT Decoder](/utilities/jwt)** - Decode & verify JWT tokens
-
 ---
 
 *Have feedback or feature requests? Feel free to reach out!*
