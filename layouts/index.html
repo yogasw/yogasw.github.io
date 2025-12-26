@@ -1,3 +1,31 @@
+{{define "head"}}
+<!-- SEO Meta Tags -->
+<meta name="description" content="Yoga Setiawan - Backend Developer specializing in Golang, PHP, and Kotlin. Learning, Observing, Executing. Experienced in web development, Android, and Linux systems.">
+<meta name="keywords" content="Yoga Setiawan, Backend Developer, Golang, PHP, Kotlin, Codeigniter, JavaScript, HTML, CSS, Android, Git, Linux, Web Development">
+<meta name="author" content="Yoga Setiawan">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="Yoga Setiawan - Backend Developer">
+<meta property="og:description" content="Backend Developer specializing in Golang, PHP, and Kotlin. Learning, Observing, Executing. Experienced in web development, Android, and Linux systems.">
+<meta property="og:image" content="https://github.com/yogasw.png">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ .Permalink }}">
+<meta name="twitter:title" content="Yoga Setiawan - Backend Developer">
+<meta name="twitter:description" content="Backend Developer specializing in Golang, PHP, and Kotlin. Learning, Observing, Executing. Experienced in web development, Android, and Linux systems.">
+<meta name="twitter:image" content="https://github.com/yogasw.png">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Additional Meta Tags -->
+<meta name="robots" content="index, follow">
+<meta name="language" content="English, Indonesia">
+{{ end }}
+
 {{ define "main" }}
 <div class="min-h-[calc(100vh-3.5rem)] bg-white dark:bg-[#0a0a0a] flex items-center justify-center py-12 px-4">
   <div class="max-w-3xl w-full text-center">

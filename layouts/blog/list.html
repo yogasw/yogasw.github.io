@@ -1,3 +1,30 @@
+{{define "head"}}
+<!-- SEO Meta Tags -->
+<meta name="description" content="Thoughts, tutorials, and insights on web development. Explore articles about modern web technologies, best practices, and development tips.">
+<meta name="keywords" content="web development, blog, tutorials, programming, {{ .Site.Title }}">
+<meta name="author" content="{{ .Site.Params.author | default .Site.Title }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="Blog - {{ .Site.Title }}">
+<meta property="og:description" content="Thoughts, tutorials, and insights on web development. Explore articles about modern web technologies, best practices, and development tips.">
+{{ with .Site.Params.ogImage }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{ end }}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ .Permalink }}">
+<meta name="twitter:title" content="Blog - {{ .Site.Title }}">
+<meta name="twitter:description" content="Thoughts, tutorials, and insights on web development. Explore articles about modern web technologies, best practices, and development tips.">
+{{ with .Site.Params.twitterImage }}
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{ end }}
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+{{ end }}
 {{ define "main" }}
 <div class="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] py-12">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
