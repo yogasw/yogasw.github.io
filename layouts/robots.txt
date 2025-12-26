@@ -3,3 +3,4 @@ User-agent: *
 Disallow:
 
 Sitemap: {{ .Site.BaseURL }}sitemap.xml
+IndexNow-Key: {{ .Site.BaseURL }}c79a02c875924554ac29aa0abbebe8ae.txt

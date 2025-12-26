@@ -1,5 +1,5 @@
 [build]
-  command = "hugo mod get && npm run build:tools && hugo --minify"
+  command = "hugo mod get && npm run build:tools && hugo --minify && npm run submit:indexnow"
   publish = "public"
   functions = "netlify/functions"
 
@@ -9,7 +9,7 @@
   NODE_VERSION = "20"
 
 [context.production]
-  command = "hugo mod get && npm run build:tools && hugo --minify"
+  command = "hugo mod get && npm run build:tools && hugo --minify && npm run submit:indexnow"
   publish = "public"
 
 [context.deploy-preview]
