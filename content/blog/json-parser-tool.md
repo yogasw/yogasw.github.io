@@ -7,8 +7,6 @@ categories: ["Tools", "Development"]
 tags: ["json", "parser", "utilities", "python", "ruby", "logging"]
 ---
 
-# JSON Parser: Solusi Parsing Multi-Format untuk Developer
-
 Pernahkah Anda mengalami kesulitan saat ingin mem-parsing log dari aplikasi Python atau Ruby? Format dictionary Python dengan single quote (`'`) atau hash Ruby seringkali tidak bisa di-parse oleh JSON parser standar. Nah, **JSON Parser** hadir sebagai solusi untuk masalah ini!
 
 ## Apa Itu JSON Parser?
