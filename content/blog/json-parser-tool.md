@@ -66,9 +66,11 @@ Untuk data yang nested dan kompleks, mode **Tree View** memudahkan Anda untuk me
 - Bisa filter multiple keys sekaligus
 - Mendukung nested key notation (contoh: `data[0].value`, `user.profile.name`)
 
-### ✅ **Dual View Mode**
+### ✅ **Triple View Mode**
 - **Text Mode**: Output JSON yang clean dan formatted
 - **Tree Mode**: Visualisasi hierarki yang interaktif dan collapsible
+- **Web Mode**: Render HTML/web content langsung di browser (cocok untuk preview HTML atau debugging web content)
+
 
 ### ✅ **Format & Clear**
 - Tombol **Format** untuk beautify JSON
@@ -113,6 +115,7 @@ Convert Python dict atau Ruby hash ke JSON standar untuk digunakan di tool lain.
 4. **Lihat hasil**: 
    - Mode **Text** untuk JSON formatted
    - Mode **Tree** untuk visualisasi hierarki
+   - Mode **Web** untuk render HTML/web content
 
 ## Tech Stack
 
