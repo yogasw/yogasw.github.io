@@ -43,6 +43,10 @@ try {
 }
 
 try {
+  // 0.2. Clean public directory before build
+  console.log("Step 0.2: Cleaning public directory...");
+  execSync("rm -rf public", { stdio: "inherit" });
+
   // 1. Generate Header HTML using Hugo
   // We build a single page to public/header_export/index.html
   console.log("Step 1: Generating Hugo Header...");
