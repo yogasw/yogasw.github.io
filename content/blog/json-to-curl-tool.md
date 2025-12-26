@@ -30,7 +30,7 @@ Bayangkan Anda punya log seperti ini:
   },
   "body": {
     "name": "John Doe",
-    "email": "john@example.com",
+    "age": 20,
     "age": 30,
     "role": "developer"
   }
@@ -148,7 +148,7 @@ Paste JSON log yang berisi request information:
   },
   "body": {
     "name": "John Doe",
-    "email": "john@example.com"
+    "age": 20
   }
 }
 ```
@@ -177,7 +177,7 @@ curl -X POST 'https://api.example.com/users' \
   -H 'Authorization: Bearer token123' \
   -d '{
     "name": "John Doe",
-    "email": "john@example.com"
+    "age": 20
   }'
 ```
 
