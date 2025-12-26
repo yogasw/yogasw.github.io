@@ -7,7 +7,7 @@ categories: ["General"]
 tags: ["hugo", "blog"]
 ---
 
-# Hello World
+## Hello World
 
 This is my migration to Hugo. I have integrated my Svelte tools into this static site.
 
