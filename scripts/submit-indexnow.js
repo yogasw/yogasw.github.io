@@ -9,7 +9,7 @@
  * Usage: node scripts/submit-indexnow.js
  * 
  * Environment Variables:
- * - INDEXNOW_API_KEY: API key for IndexNow (default: c79a02c875924554ac29aa0abbebe8ae)
+ * - INDEXNOW_API_KEY: API key for IndexNow (default: e02877ba98fe474c9372ac77868c4f6c)
  * - SITE_URL: Base URL of the site (default: https://yogasw.my.id)
  */
 
@@ -18,7 +18,7 @@ const { XMLParser } = require('fast-xml-parser');
 
 // Configuration
 const SITE_URL = process.env.SITE_URL || 'https://yogasw.my.id';
-const INDEXNOW_API_KEY = process.env.INDEXNOW_API_KEY || 'c79a02c875924554ac29aa0abbebe8ae';
+const INDEXNOW_API_KEY = process.env.INDEXNOW_API_KEY || 'e02877ba98fe474c9372ac77868c4f6c';
 const SITEMAP_URL = `${SITE_URL}/new-sitemap.xml`;
 const INDEXNOW_API_URL = 'api.indexnow.org';
 
@@ -59,6 +59,8 @@ function submitToIndexNow(urls) {
       keyLocation: `${SITE_URL}/${INDEXNOW_API_KEY}.txt`,
       urlList: urls
     });
+
+    console.log("Post data to index Now", JSON.stringify(postData));
 
     const options = {
       hostname: INDEXNOW_API_URL,
